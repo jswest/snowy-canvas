@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Canvas Fun</title>
+</head>
+<body>
+  <canvas id="canvas" width="1100" height="480">
+  </canvas>
+
+  <script>
+var Particle = function() {
+  var that = this;
+  this.x = Math.floor( Math.random() * width + 1);
+  this.y = Math.floor( Math.random() * height );
+  this.vx = Math.random() * -5;
+  this.vy = Math.random() * 2;
+
+  this.coloration = "rgb(255,255,255)";
+
+  this.updatePosition = function() {
+    that.x = that.x + that.vx;
+    that.y = that.y + that.vy;
+  }
+
+  this.updateColoration = function() {
+
+  }
+}
+
+
+var canvas = document.getElementById( 'canvas' );
+var context = canvas.getContext( '2d' );
+
+var width = 1100
+var height = 480
+
+var particles = [];
+for( var i = 0; i < 1000; i++ ) {
+  particles.push( new Particle() );
+}
+
+var draw = function() {
+  context.fillStyle = "rgb(0,0,0)";
+  context.fillRect( 0, 0, width, height );
+
+  var particle;
+  for( var i = 0; i < particles.length; i++ ) {
+    particle = particles[i];
+    context.fillStyle = particle.coloration;
+    context.fillRect( particle.x, particle.y, Math.random() * 2, Math.random() * 2 );
+    particle.updatePosition();
+    if( particle.x > 1100 || particle.y > 480 ) {
+      delete particle;
+    }
+  }
+}
+
+setInterval( function() {
+  draw();
+}, 13 );
+  </script>
+</body>
