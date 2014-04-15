@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+html,
+body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+canvas {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; }
+header.primary-header {
+  background-color: rgb(255,255,255);
+  margin-top: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 40;
+  z-index: 1; }
+header.primary-header h1 {
+  color: rgb(0,0,0);
+  font-family: "Helvetica Neue", "Helvetica";
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  line-height: 40px;
+  margin-left: 20px;
+  text-align: left;
+  text-transform: uppercase;
+}

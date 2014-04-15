@@ -2,131 +2,33 @@
 <html>
 <head>
   <title>Canvas Fun</title>
+  <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 <body>
-  <style>
-* {
-  margin: 0;
-  padding: 0; }
-.ad {
-  overflow: hidden;
-  position: relative;
-  max-width: 1100px;
-  min-width: 720px;
-  width: 100%;
-  height: 480px; }
-canvas {
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 480px;
-  z-index: 0; }
-header.primary-header {
-  margin-top: -50px;
-  position: absolute;
-  top: 50%;
-  width: 100%;
-  height: 100px;
-  z-index: 1; }
-header.primary-header h1 {
-  color: rgb(255,255,255);
-  font-family: "Helvetica Neue";
-  font-size: 100px;
-  font-weight: 100;
-  letter-spacing: 10px;
-  line-height: 100px;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-  </style>
   <div class="ad">
     <header class="primary-header">
       <h1>Snow!</h1>
     </header>
-    <canvas id="canvas" width="1100" height="480">
-    </canvas>
+    <canvas id="snowy-canvas"></canvas>
   </div>
-
+  <script>
+  window.requestAnimFrame = ( function () {
+    return  window.requestAnimationFrame       ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame;
+  } )();
+  </script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+  <script src="js/app.js"></script>
   <script>
 
-var progression = [ 1, 1, 2, 2, 3, 4, 3, 2, 3, 4, 5, 4, 3, 2, 1, 2, 1, 2, 1, 2, 3, 4, 3, 2, 1
-];
-
-
-
-var Particle = function( width, height ) {
-  var that = this;
-  this.width = width;
-  this.height = height;
-  this.x = ( that.width * 1.5 ) + ( Math.floor( Math.random() * that.width + 1 ) );
-  this.y = -( that.height ) + ( Math.floor( Math.random() * that.height ) );
-  this.vx = -2 + ( Math.random() * -5 );
-  this.vy = 1.5 + ( Math.random() * 3.5 );
-
-  this.coloration = "rgb(255,255,255)";
-
-  this.updatePosition = function( wind ) {
-    that.x = that.x + ( that.vx * wind );
-    that.y = that.y + ( that.vy * wind );
-  }
-}
-
-var Snowfield = function( progression ) {
-  var that = this;
-  this.canvas = document.getElementById( 'canvas' );
-  this.context = this.canvas.getContext( '2d' );
-  this.width = 1100;
-  this.height = 480;
-  this.particles = [];
-  this.progression = progression;
-  this.progressionIndex = 0;
-  this.smallIndex = 0;
-
-  this.pushParticles = function() {
-    for( var i = 0; i < 10000; i++ ) {
-      that.particles.push( new Particle( that.width, that.height ) );
-    }
-  }
-
-  this.draw = function() {
-    that.context.fillStyle = "rgb(0,0,0)";
-    that.context.fillRect( 0, 0, that.width, that.height );
-    var particle;
-    for( var i = 0; i < that.particles.length; i++ ) {
-      particle = that.particles[i];
-      that.context.fillStyle = particle.coloration;
-      that.context.fillRect( particle.x, particle.y, Math.random() * 3, Math.random() * 3 );
-      particle.updatePosition( that.progression[ that.progressionIndex ] );
-      if( particle.x > 1100 || particle.y > 480 ) {
-        that.particles.slice( i, i + 1 );
-      }
-    }
-  }
-
-  this.init = function() {
-    that.pushParticles();
-  }
-
-  this.run = function() {
-    that.draw();
-    that.smallIndex++;
-    if( that.smallIndex > 16 ) {
-      that.smallIndex = 0;
-      that.progressionIndex++;
-      if( that.progressionIndex > that.progression.length - 1 ) {
-        that.progressionIndex = 0;
-      }      
-    }
-  }
-}
-
-var snowfield = new Snowfield( progression );
-snowfield.init();
-setInterval( snowfield.run, 33 );
-//snowfield.run();
+  var progression = [ 1, 1, 2, 2, 3, 4, 3, 2, 3, 4, 5, 4, 3, 2, 1, 2, 1, 2, 1, 2, 3, 4, 3, 2, 1 ];
+  var numberOfParticles = 10000;
+$(document).ready( function () {
+	var snowfield = new Snowfield( progression, numberOfParticles );
+	snowfield.init();
+	snowfield.start();
+});
 
   </script>
 </body>
